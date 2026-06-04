@@ -94,4 +94,27 @@ public class MatrizOrtogonal implements java.io.Serializable {
         actualFil.derecha = nuevo;
         nuevo.izquierda = actualFil;
     }
+ // Método para buscar el valor de una celda específica
+    public NodoCelda buscar(int fila, int columna) {
+        NodoCelda actual = raiz;
+        
+        // 1. Bajamos buscando la cabecera de la fila
+        while (actual.abajo != null && actual.abajo.fila <= fila) {
+            actual = actual.abajo;
+        }
+        // Si no encontró la fila, la celda está vacía
+        if (actual.fila != fila) return null; 
+
+        // 2. Nos movemos a la derecha buscando la columna
+        while (actual.derecha != null && actual.derecha.columna <= columna) {
+            actual = actual.derecha;
+        }
+        
+        // Si la encuentra, devuelve el nodo con el número
+        if (actual.columna == columna) {
+            return actual; 
+        }
+        
+        return null; // Si no, retorna nulo
+    }
 }
