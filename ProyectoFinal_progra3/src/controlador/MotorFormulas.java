@@ -50,16 +50,26 @@ public class MotorFormulas {
         return 0.0;
     }
 
-    // Método auxiliar para ir a buscar el número exacto a la matriz ortogonal
+ // Método auxiliar para ir a buscar el número exacto a la matriz ortogonal
     private double obtenerValorCelda(String nombreHoja, int fila, int columna) {
         // En tu ListaHojas necesitarás un método que devuelva la matriz por nombre
-        // Por ahora asumimos que iteramos o usamos la actual
+        // Por ahora usamos la matriz activa actual
         MatrizOrtogonal matriz = espacioTrabajo.getMatrizActual(); 
         
-        // Aquí deberías tener un método 'buscar' en tu MatrizOrtogonal
-        // NodoCelda celda = matriz.buscar(fila, columna);
-        // if(celda != null) return Double.parseDouble(celda.contenido);
+        // Buscamos la celda en la matriz
+        estructuras.NodoCelda celda = matriz.buscar(fila, columna);
         
-        return 0.0; // Retorno temporal hasta que implementes buscar() en MatrizOrtogonal
+        // Si la celda existe y tiene contenido, lo convertimos a número
+        if (celda != null && celda.contenido != null) {
+            try {
+                return Double.parseDouble(celda.contenido);
+            } catch (NumberFormatException e) {
+                // Si el usuario escribió letras en vez de números, devuelve 0
+                System.out.println("No se pudo operar: la celda no es un número.");
+                return 0.0; 
+            }
+        }
+        
+        return 0.0; // Si la celda está vacía, devuelve 0
     }
 }
